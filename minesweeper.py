@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Jun 25 20:14:39 2016
-
 @author: Utkarsh Rastogi
 """
 
 import sys
 import random
 from PyQt4 import QtGui,QtCore
+
+highScore = 999999
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -233,10 +234,16 @@ class MainWindow(QtGui.QMainWindow):
 
     def displayMessage(self, m):
         msgBox = QtGui.QMessageBox();
+        global highScore
         if m=='win':
             txt = 'You flagged all Mines.\nYou Win.'
-            msgBox.setInformativeText("Your time is " + str(round(self.secs,1)) + " Sec.")
             title = 'Congratulations!!!'
+            if self.secs < highScore:
+                highScore = round(self.secs,1)
+                detailTxt = "New Highscore is " + str(highScore) + " Sec."
+            else:
+                detailTxt = "Highscore is " + str(highScore) + " Sec."
+            msgBox.setInformativeText("Your time is " + str(round(self.secs,1)) + " Sec.\n\n" + detailTxt)
         else:
             txt = 'You clicked a Mine.\nGame Over'
             
